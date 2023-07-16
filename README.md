@@ -3,10 +3,10 @@
 Command line tool for parsing events stored as json objects in an input file
 
 The parser is split between 4 main stages:
-* File reading (/internal/ioProcess/inputProcess.go)
-* Average per minute calculation (/internal/calc/averageMinute)
-* Moving average calculation (/internal/calc/averageMinute)
-* File writing (/internal/ioProcess/outputProcess.go)
+* File reading (internal/ioProcess/inputProcess.go)
+* Average per minute calculation (internal/calc/averageMinute)
+* Moving average calculation (internal/calc/averageMinute)
+* File writing (internal/ioProcess/outputProcess.go)
 
 All stages run concurrently, meaning a stage can start before the previous one finishes
 
