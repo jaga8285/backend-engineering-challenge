@@ -11,6 +11,10 @@ import (
 )
 
 func Test_run(t *testing.T) {
+	outputFile := "../test/test1.myout"
+	t.Cleanup(func() {
+		os.Remove(outputFile)
+	})
 	tests := []struct {
 		name       string
 		cfg        config
@@ -20,7 +24,7 @@ func Test_run(t *testing.T) {
 			name: "single thread test",
 			cfg: config{
 				InputFile:  "../test/test1.in",
-				OutputFile: "../test/test1.myout",
+				OutputFile: outputFile,
 				WindowSize: 10,
 				NumWorkers: 1,
 			},
