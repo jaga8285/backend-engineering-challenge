@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// IO Process responsible for writing Calculated Moving Averages to a file (or stdout if no file is specified)
 func WriteFile(filename string, averageChannel <-chan data.CalculatedMovingAverage) (chan error, error) {
 
 	var f io.Writer

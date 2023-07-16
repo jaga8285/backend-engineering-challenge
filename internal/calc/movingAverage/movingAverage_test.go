@@ -10,9 +10,9 @@ import (
 
 func newRunningAverage(sum uint, counter uint) data.RunningAverage {
 	var average data.RunningAverage
-	average.AddMeasurment(sum)
+	average.AddMeasurement(sum)
 	for i := uint(1); i < counter; i++ {
-		average.AddMeasurment(0)
+		average.AddMeasurement(0)
 	}
 	return average
 }

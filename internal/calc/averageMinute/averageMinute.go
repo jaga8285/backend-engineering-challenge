@@ -39,7 +39,7 @@ func (w worker) startWorker() {
 		switch command.cmdType {
 		case ProcessEvent:
 			{
-				runningAverage.AddMeasurment(command.eventArgument.Duration)
+				runningAverage.AddMeasurement(command.eventArgument.Duration)
 			}
 		case EmitResults:
 			{

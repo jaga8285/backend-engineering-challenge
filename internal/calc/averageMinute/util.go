@@ -7,7 +7,7 @@ type fanOut[T any] struct {
 	lastChannelSentTo int
 }
 
-// Send message. Sends the message to a random, non-full channel
+// Send. Sends the message to a random, non-full channel
 // WARNING: very bad implementation, don't look at it
 func (fan fanOut[T]) send(message T) {
 	var sent bool
@@ -22,17 +22,21 @@ func (fan fanOut[T]) send(message T) {
 	}
 }
 
+// Broadcast. Sends the message to all channels
 func (fan fanOut[T]) broadcast(message T) {
 	for i := 0; i < len(fan.outputChannels); i++ {
 		fan.outputChannels[i] <- message
 	}
 }
+
+// Close. Closes all channels, use this during cleanup
 func (fan fanOut[T]) close() {
 	for i := 0; i < len(fan.outputChannels); i++ {
 		close(fan.outputChannels[i])
 	}
 }
 
+// Creates a new fanOut object. numChannels specifies how many channels need to be created, bufferSize specifies the buffer size of each channel
 func newFanOut[T any](numChanels int, bufferSize int) fanOut[T] {
 	chs := make([]chan T, numChanels)
 

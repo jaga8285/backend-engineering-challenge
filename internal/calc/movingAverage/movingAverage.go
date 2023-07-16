@@ -8,20 +8,21 @@ import (
 // the average for the past n minutes, where n is window size. This process assumes that minute averages are ascending in timestamp
 // but it does not assume that all minutes will be provided. Namely, it is capable of "filling in" missing minutes with empty values.
 // The process stores the past n minute averages in a circular buffer and sends the weighted average along with a timestamp to the file output process
-func StartMovingAverage(windowSize int, averagesChannel <-chan data.MinuteAverage) <-chan data.CalculatedMovingAverage {
+func StartMovingAverage(windowSize int, minuteAveragesChannel <-chan data.MinuteAverage) <-chan data.CalculatedMovingAverage {
+
 	movingAverageChannel := make(chan data.CalculatedMovingAverage)
 	lastNAverages := data.NewFIFOQueue[data.MinuteAverage](windowSize)
 	var lastUnixMinute data.UnixMinute
 
 	go func() {
 		defer close(movingAverageChannel)
-		average := <-averagesChannel
+		average := <-minuteAveragesChannel
 
 		lastUnixMinute = average.Minute
 		lastNAverages.Enqueue(average)
 		movingAverageChannel <- data.CalcMovingAverage(lastNAverages.GetQueue(), average.Minute)
 
-		for average := range averagesChannel {
+		for average := range minuteAveragesChannel {
 			for lastUnixMinute < average.Minute-1 {
 				lastUnixMinute++
 				lastNAverages.Enqueue(data.MinuteAverage{

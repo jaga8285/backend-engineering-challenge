@@ -1,6 +1,6 @@
 package data
 
-//Simple FIFO Queue data structure
+//Simple FIFO Queue data structure with a circular buffer. Inserts and unordered full queue reads are preformed in constant time
 
 type FIFOQueue[T any] struct {
 	queue []T
