@@ -15,6 +15,7 @@ All stages run concurrently, meaning a stage can start before the previous one f
 
 ## Usage
 ``` ./event_cli --window_size 10 --input_file test/test1.in```
+
 Flags:
 * ```--window_size``` specifies the size of the moving average window (mandatory)
 * ```--input_file | -i``` specifies the name of the input file (mandatory)
